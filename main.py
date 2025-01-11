@@ -5,9 +5,14 @@ from random_walk import *
 def main():
    canvas = Canvas(800, 600) 
    walker = Walker(canvas)
+   random_walk = Random_Walk(walker)
+   random_walk.set_stride(1)
+   down_right_walk = Weighted_Walk(walker)
+   down_right_walk.set_weights([0.1, 0.4, 0.4, 0.1])
+   walker.set_strategy(random_walk)
 
    while is_in_bounds(walker):
-      walker.walk(walker.down_right_walk)
+      walker.walk()
       walker.draw()
    
    canvas.write("test")
