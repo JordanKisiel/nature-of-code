@@ -109,4 +109,26 @@ class Guassian_Walk(Walk_Strategy):
         self.walker.x += self.walker.stride * self.directions[x_step]
         self.walker.y += self.walker.stride * self.directions[y_step]
 
+class Qualifying_Walk(Walk_Strategy):
+    def __init__(self, walker):
+        self.walker = walker
+        self.directions = [-1, 0, 1]
+
+    def walk(self):
+        x_step = math.floor(self.walker.stride * self._accept_reject())
+        y_step = math.floor(self.walker.stride * self._accept_reject())
+        x_dir = random.randint(0, 2)
+        y_dir = random.randint(0, 2)
+
+        self.walker.x += self.directions[x_dir] * x_step
+        self.walker.y += self.directions[y_dir] * y_step
+        
+
+    def _accept_reject(self):
+        while True:
+            r1 = random.random()
+            r2 = random.random()
+
+            if r2 < 1 / (r1 ** 2):
+                return r1
         

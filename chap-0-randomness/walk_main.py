@@ -5,9 +5,9 @@ from random_walk import *
 def main():
    canvas = Canvas(800, 600) 
    walker = Walker(canvas, 1)
-   walk = Guassian_Walk(walker)
+   walk = Qualifying_Walk(walker)
    walker.set_strategy(walk)
-   walker.set_stride(1)
+   walker.set_stride(5)
 
    iterations = 0
    while is_in_bounds(walker) and iterations < 100000:
