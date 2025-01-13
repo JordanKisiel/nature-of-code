@@ -1,4 +1,6 @@
 import random
+import math
+import numpy as np
 from abc import abstractmethod, ABC
 
 class Walker:
@@ -15,7 +17,6 @@ class Walker:
         self.y = self.canvas.height / 2
 
     def set_stride(self, stride):
-        assert(stride >= 0)
         self.stride = stride
 
     def walk(self):
@@ -89,3 +90,23 @@ class Weighted_Walk(Walk_Strategy):
         assert(len(weights) == 4)
 
         self.weights = weights
+
+class Guassian_Walk(Walk_Strategy):
+    def __init__(self, walker):
+        self.walker = walker
+        self.rng = np.random.default_rng()
+        self.directions = [-1, 0, 1]
+
+    def walk(self):
+        guass_step = math.floor((self.rng.standard_normal() * 
+                                 self.walker.stride) + 1)
+
+        x_step = random.randint(0, 2) 
+        y_step = random.randint(0, 2) 
+        
+        self.walker.set_stride(guass_step)
+
+        self.walker.x += self.walker.stride * self.directions[x_step]
+        self.walker.y += self.walker.stride * self.directions[y_step]
+
+        
