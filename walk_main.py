@@ -1,16 +1,18 @@
-from canvas import Canvas
-from random_walk import *
+from randomness.canvas import Canvas
+from randomness.random_walk import *
+import random
 
 
 def main():
    canvas = Canvas(800, 600) 
    walker = Walker(canvas, 1)
-   walk = Qualifying_Walk(walker)
+   walk = Perlin_Walk(walker)
    walker.set_strategy(walk)
-   walker.set_stride(5)
+   walker.set_stride(6)
 
-   iterations = 0
-   while is_in_bounds(walker) and iterations < 100000:
+   iterations = random.randint(0, 10000)
+   while is_in_bounds(walker) and iterations < iterations + 100000:
+      walk.set_offset(iterations)
       walker.walk()
       walker.draw()
       iterations += 1

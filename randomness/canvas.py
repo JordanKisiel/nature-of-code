@@ -18,4 +18,4 @@ class Canvas:
         self.context = ImageDraw.Draw(self.out)
 
     def write(self, file_name):
-        self.out.save(f"./images/{file_name}.png")
+        self.out.save(f"./randomness/images/{file_name}.png")

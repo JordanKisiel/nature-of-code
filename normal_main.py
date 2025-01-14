@@ -1,6 +1,6 @@
 import numpy as np
 import math
-from canvas import *
+from randomness.canvas import *
 
 def main():
     canvas = Canvas(800, 600)

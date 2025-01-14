@@ -1,6 +1,7 @@
 import random
 import math
 import numpy as np
+from randomness.perlin_noise import *
 from abc import abstractmethod, ABC
 
 class Walker:
@@ -131,4 +132,26 @@ class Qualifying_Walk(Walk_Strategy):
 
             if r2 < 1 / (r1 ** 2):
                 return r1
+            
+class Perlin_Walk(Walk_Strategy):
+    def __init__(self, walker):
+        self.walker = walker 
+        self.noise = PerlinNoise(octaves=8, seed=2)
+        self.offset = None
+        self.smoothing = 10
+
+    def walk(self):
+        assert(self.offset != None)
+
+        x_step = math.floor(self.walker.stride * 
+                            self.noise.get(self.offset / self.smoothing))
+        y_step = math.floor(self.walker.stride * 
+                            self.noise.get((self.offset + 10000) / self.smoothing))
         
+        self.walker.x += x_step
+        self.walker.y += y_step
+
+    def set_offset(self, offset):
+        self.offset = offset
+
+
