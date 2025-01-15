@@ -1,13 +1,17 @@
 import random
 import string
-import math
 
 class DNA:
-    def __init__(self, length):
+    def __init__(self, 
+                 length, 
+                 crossover_strategy):
         self.alphabet = list(string.ascii_lowercase)
         self.alphabet.append(" ")
         self.genes = self._initilize_dna(length)
-        self.fitness = 0
+        self.raw_fitness = 0
+        self.adj_fitness = 0
+        self.rank = 1
+        self.crossover_strategy = crossover_strategy 
 
     def _initilize_dna(self, length):
         rand_str = ""
@@ -16,29 +20,9 @@ class DNA:
         
         return rand_str
     
-    def calculate_fitness(self, target):
-        raw_fit = 0
-        for n in range(len(target)):
-            if self.genes[n] == target[n]:
-                raw_fit += 1
-
-        self.fitness = raw_fit / len(target)
-    
     def crossover(self, other_dna):
-        child = DNA(len(self.genes))
-        child_genes = list(child.genes)
-        self_genes = list(self.genes)
-        other_genes = list(other_dna.genes)
-
-        midpoint = random.randint(0, len(self.genes))
-
-        for n in range(len(self.genes)):
-            if n < midpoint:
-                child_genes[n] = self_genes[n]
-            else:
-                child_genes[n] = other_genes[n]
-
-        child.genes = "".join(child_genes)
+        child = self.crossover_strategy.crossover(self, 
+                                                  other_dna)
         
         return child
 
@@ -50,4 +34,3 @@ class DNA:
                 self_genes[index] = self.alphabet[rand_index]
         
         self.genes = "".join(self_genes)
-        
